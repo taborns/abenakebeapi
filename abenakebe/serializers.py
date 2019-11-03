@@ -20,3 +20,8 @@ class MemeJokeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.MemeJoke
         fields = '__all__'
+
+class FeedSerializer(serializers.Serializer):
+    text_jokes = TextJokeSerializer(many=True)
+    image_jokes = ImageJokeSerializer(many=True)
+    meme_jokes = MemeJokeSerializer(many=True)

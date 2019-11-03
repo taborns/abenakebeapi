@@ -25,6 +25,7 @@ urlpatterns = [
     path('jokes/image/', views.ImageJokeView.as_view()),
     path('jokes/meme/', views.MemeJokeView.as_view()),
     path('jokes/text/', views.TextJokeView.as_view()),
+    path('jokes/all/', views.FeedView.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
