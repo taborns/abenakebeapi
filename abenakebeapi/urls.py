@@ -26,6 +26,10 @@ urlpatterns = [
     path('jokes/meme/', views.MemeJokeView.as_view()),
     path('jokes/text/', views.TextJokeView.as_view()),
     path('jokes/all/', views.FeedView.as_view()),
+
+    path('like/image/', views.ImageLikeView.as_view()),
+    path('like/meme/', views.MemeLikeView.as_view()),
+    path('like/text/', views.TextLikeView.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -30,3 +30,38 @@ class FeedView(APIView):
         )
 
         return Response( serializer.data )
+
+
+class TextLikeView(generics.CreateAPIView):
+
+    serializer_class = serializers.TextLikeSerializer 
+    queryset = models.TextLike.objects.all()
+
+    def perform_create(self, serializer):
+        like = serializer.save()
+        joke = like.joke
+        joke.like_count += 1
+        joke.save()
+
+class ImageLikeView(generics.CreateAPIView):
+
+    serializer_class = serializers.ImageLikeSerializer 
+    queryset = models.TextLike.objects.all()
+    
+    def perform_create(self, serializer):
+        like = serializer.save()
+        joke = like.joke
+        joke.like_count += 1
+        joke.save()
+
+    
+class MemeLikeView(generics.CreateAPIView):
+
+    serializer_class = serializers.MemeLikeSerializer 
+    queryset = models.TextLike.objects.all()
+    
+    def perform_create(self, serializer):
+        like = serializer.save()
+        joke = like.joke
+        joke.like_count += 1
+        joke.save()
