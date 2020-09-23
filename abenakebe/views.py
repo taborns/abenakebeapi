@@ -7,17 +7,22 @@ from rest_framework.response import Response
 # Create your views here.
 Feed = namedtuple('Feed', ('text_jokes', 'image_jokes','meme_jokes'))
 
+class JokeView(generics.ListAPIView):
+    serializer_class = serializers.JokeSerializer  
+    queryset = models.Joke.objects.all() 
+
+
 class TextJokeView(generics.ListAPIView):
-    serializer_class = serializers.TextJokeSerializer  
-    queryset = models.TextJoke.objects.all() 
+    serializer_class = serializers.JokeSerializer  
+    queryset = models.Joke.objects.filter(joke_type='text') 
 
 class ImageJokeView(generics.ListAPIView):
-    serializer_class = serializers.ImageJokeSerializer 
-    queryset = models.ImageJoke.objects.all() 
+    serializer_class = serializers.JokeSerializer  
+    queryset = models.Joke.objects.filter(joke_type='image') 
 
 class MemeJokeView(generics.ListAPIView):
-    serializer_class = serializers.MemeJokeSerializer 
-    queryset = models.MemeJoke.objects.all() 
+    serializer_class = serializers.JokeSerializer  
+    queryset = models.Joke.objects.filter(joke_type='meme') 
 
 class FeedView(APIView):
     def get(self, request, format=None):
@@ -31,6 +36,17 @@ class FeedView(APIView):
 
         return Response( serializer.data )
 
+
+class JokeLikeView(generics.CreateAPIView):
+
+    serializer_class = serializers.JokeLikeSerializer 
+    queryset = models.JokeLike.objects.all()
+
+    def perform_create(self, serializer):
+        like = serializer.save()
+        joke = like.joke
+        joke.like_count += 1
+        joke.save()
 
 class TextLikeView(generics.CreateAPIView):
 

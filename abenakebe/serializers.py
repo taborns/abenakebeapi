@@ -1,6 +1,12 @@
 from rest_framework import serializers 
 from abenakebe import models 
 
+class JokeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Joke 
+        fields = '__all__'
+
 class TextJokeSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -26,6 +32,16 @@ class FeedSerializer(serializers.Serializer):
     text_jokes = TextJokeSerializer(many=True)
     image_jokes = ImageJokeSerializer(many=True)
     meme_jokes = MemeJokeSerializer(many=True)
+
+class JokeLikeSerializer(serializers.ModelSerializer):
+    like_count = serializers.SerializerMethodField()
+
+    def get_like_count(self, obj):
+        return obj.joke.like_count
+
+    class Meta:
+        model = models.JokeLike
+        fields = '__all__'
 
 class TextLikeSerializer(serializers.ModelSerializer):
     like_count = serializers.SerializerMethodField()
